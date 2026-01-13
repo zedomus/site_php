@@ -1,0 +1,33 @@
+CREATE DATABASE gestaoled;
+
+USE gestaoled;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,       -- Identificador único
+    nome VARCHAR(255) NOT NULL,              -- Nome do utilizador
+    email VARCHAR(99) UNIQUE NOT NULL,      -- E-mail do utilizador (deve ser único)
+    password VARCHAR(255) NOT NULL,          -- Senha (encriptada)
+    role ENUM('professor', 'admin')          -- Tipo de utilizador
+        DEFAULT 'professor',                 -- Valor padrão: "professor"
+    data_registo TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Data de registo
+);
+CREATE TABLE equipamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,       -- Identificador único do equipamento
+    nome VARCHAR(255) NOT NULL,              -- Nome do equipamento
+    tipo VARCHAR(255) NOT NULL,              -- Tipo de equipamento (ex.: robótica, fotografia)
+    descricao TEXT,                          -- Descrição opcional
+    quantidade INT NOT NULL,                 -- Quantidade disponível
+    data_registo DATE NOT NULL               -- Data de registo do equipamento
+);
+
+CREATE TABLE requisicoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,      -- Identificador único da requisição
+    equipamento_id INT NOT NULL,            -- ID do equipamento requisitado (chave estrangeira)
+    requisitante_id INT NOT NULL,           -- ID do utilizador que requisitou (chave estrangeira)
+    data_requisicao DATE NOT NULL,          -- Data em que a requisição foi feita
+    data_devolucao DATE DEFAULT NULL,       -- Data de devolução (null enquanto não devolvido)
+    estado ENUM('pendente', 'devolvido')    -- Estado da requisição
+        DEFAULT 'pendente',                 -- Valor padrão é "pendente"
+    FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id), -- Relação com equipamentos
+    FOREIGN KEY (requisitante_id) REFERENCES users(id)         -- Relação com utilizadores
+);

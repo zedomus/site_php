@@ -1,0 +1,15 @@
+INSERT INTO users (nome, email, password, role) 
+VALUES 
+('Administrador', 'admin@led.com', 'admin123', 'admin'),
+('Professor João', 'joao@led.com', 'joaopass123', 'professor');
+
+INSERT INTO equipamentos (nome, tipo, descricao, quantidade, data_registo) 
+VALUES 
+('Kit de Robótica', 'Robótica', 'Kit completo com sensores e motores', 10, CURDATE()),
+('Máquina Fotográfica', 'Fotografia', 'Câmera DSLR Canon', 5, CURDATE()),
+('Drone', 'Filmagem', 'Drone com câmara 4K', 3, CURDATE());
+
+INSERT INTO requisicoes (equipamento_id, requisitante_id, data_requisicao) 
+VALUES 
+(1, 2, CURDATE()), -- Professor João requisitou o Kit de Robótica
+(2, 2, CURDATE()); -- Professor João requisitou a Máquina Fotográfica
